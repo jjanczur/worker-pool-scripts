@@ -13,8 +13,8 @@ IEXEC_CORE_HOST=workerpool.iexecenterprise.com #18.185.47.13 #NFT wallet pool
 #IEXEC_CORE_HOST=3.66.230.42 # Non NFT wallet pool
 IEXEC_CORE_PORT=7001
 IEXEC_SDK_VERSION=7.2.2
-IEXEC_WORKER_SSL_TRUSTSTORE=/usr/lib/jvm/zulu-11/lib/security/cacerts
-IEXEC_WORKER_SSL_TRUSTSTORE_PASSWORD=YaD&@g4U&!bFfiH3yNtz
+IEXEC_WORKER_SSL_TRUSTSTORE="/usr/lib/jvm/zulu-11/lib/security/cacerts"
+IEXEC_WORKER_SSL_TRUSTSTORE_PASSWORD="YaD&@g4U&!bFfiH3yNtz"
 IEXEC_CORE_PROTOCOL=https
 IEXEC_TEE_ENABLED=false
 GAS_PRICE_CAP=0
@@ -377,6 +377,7 @@ else
 			fi
 
 			message "INFO" "A wallet with address $WALLET_ADDR was imported in $WALLET_FILE."
+			message "INFO" "To start the worker please relaunch the worker."
 
 			read -p "Press [Enter] to exit..."
 			exit 1          
@@ -396,7 +397,7 @@ else
 
     message "INFO" "chain.json created in $PWD"
     #Set defailt chain to bellecour
-    sed -i '/default/c\   \"default\": \"$CHAIN\"' chain.json
+    sed -i '/default/c\   \"default\": \"bellecour\"' chain.json
 	checkExitStatus $? "Can't set default chain to $CHAIN ."
 	
     message "INFO" "Updated default chain to $CHAIN "
