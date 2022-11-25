@@ -44,6 +44,9 @@ WORKERWALLETPASSWORD=${config["WALLET_PASSWORD"]}
 WORKER_NAME=${config["WORKER_NAME"]}
 
 
+sudo chown -Rf vagrant:root  /home/$(whoami)/.ethereum/keystore/
+sudo chown -Rf vagrant:root  /tmp/iexec
+
 
 # Function that prints messages
 function message() {
