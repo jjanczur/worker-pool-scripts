@@ -120,6 +120,8 @@ echo "                                                                "
 echo "________________________________________________________________"
 echo "                                                                "
 
+#Set to yes to skip user inputs
+answercontinue=yes
 while [ "$answercontinue" != "yes" ] && [ "$answercontinue" != "no" ]; do
 	read -p "Do you want continue with the above details? [yes/no] " answercontinue
 done	
@@ -216,6 +218,8 @@ if [ ! -z "${RUNNINGWORKERS}" ]; then
 
     message "INFO" "iExec $WORKER_POOLNAME worker is already running at your machine..."
 
+    #Set to yes just to skip user inputs
+    attachworker=yes
     # Attach to worker container
     while [ "$attachworker" != "yes" ] && [ "$attachworker" != "no" ]; do
       read -p "Do you want to see logs of your worker? [yes/no] " attachworker
@@ -230,7 +234,8 @@ elif [ ! -z "${STOPPEDWORKERS}" ]; then
 
     message "INFO" "Stopped $WORKER_POOLNAME worker detected."
 
-    # Relaunch worker container
+    relaunchworker=yes #Set to yes to skip user inputs 
+    # Relaunch worker container    
     while [ "$relaunchworker" != "yes" ] && [ "$relaunchworker" != "no" ]; do
       read -p "Do you want to relauch stopped worker? [yes/no] " relaunchworker
     done
@@ -240,6 +245,7 @@ elif [ ! -z "${STOPPEDWORKERS}" ]; then
           docker start $(echo $STOPPEDWORKERS)
         message "INFO" "Worker was sucessfully started."
 
+        attachworker=yes #Set to yes to skip user inputs
         # Attach to worker container
         while [ "$attachworker" != "yes" ] && [ "$attachworker" != "no" ]; do
           read -p "Do you want to see logs of your worker? [yes/no] " attachworker
@@ -284,6 +290,8 @@ else
             # Extracting wallet address
             WALLET_ADDR=$(cat ${files[$i]} | awk -v RS= '{$1=$1}1' | tr -d "[:space:]" | sed -E "s/.*\"address\":\"([a-zA-Z0-9]+)\".*/\1/g")
 
+             #Set to yes to skip user inputs and always continue with recently added wallet.
+            answerwalletuse=yes
             while [ "$answerwalletuse" != "yes" ] && [ "$answerwalletuse" != "no" ]; do
                 read -p "Do you want to use wallet 0x$WALLET_ADDR? [yes/no] " answerwalletuse
             done
@@ -347,9 +355,10 @@ else
             message "INFO" "A wallet with address $WALLET_ADDR was created in $WALLET_FILE."
 
             message "INFO" "Please fill your wallet with minimum $MINETHEREUM ETH and $DEPOSIT nRLC. Then relaunch the script."
-            read -p "Press [Enter] to exit..."
-            exit 1
-        
+            bash launch-worker.sh
+            #read -p "Press [Enter] to exit..."
+            exit 1            
+            
         elif [ "$IMPORT_WALLET" == "yes" ]; then
 		
 			WORKERWALLETPRIVATEKEY=$WALLET_PRIVATE_KEY
@@ -379,8 +388,8 @@ else
 
 			message "INFO" "A wallet with address $WALLET_ADDR was imported in $WALLET_FILE."
 			message "INFO" "To start the worker please relaunch the worker."
-
-			read -p "Press [Enter] to exit..."
+      bash launch-worker.sh 
+			#read -p "Press [Enter] to exit..."
 			exit 1          
         else
 		    message "INFO" "Required values are not set in worker_config.properties file. Please set them all and relaunch the script."
@@ -488,6 +497,8 @@ else
 
     message "INFO" "Created worker $WORKER_POOLNAME-worker."
 
+    #Set to yes to skip user inputs
+    startworker=yes
     # Attach to worker container
     while [ "$startworker" != "yes" ] && [ "$startworker" != "no" ]; do
       read -p "Do you want to start worker? [yes/no] " startworker
@@ -503,5 +514,5 @@ else
     fi
 
 fi
-
-read -p "Press [Enter] to exit..."
+exit 1
+#read -p "Press [Enter] to exit..."
