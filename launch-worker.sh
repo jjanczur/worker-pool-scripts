@@ -44,6 +44,48 @@ WORKERWALLETPASSWORD=${config["WALLET_PASSWORD"]}
 WORKER_NAME=${config["WORKER_NAME"]}
 
 
+
+# Function that prints messages
+function message() {
+  echo "[$1] $2"
+  if [ "$1" == "ERROR" ]; then
+    read -p "Press [Enter] to exit..."
+    exit 1
+  fi
+}
+
+# Function which checks exit status and stops execution
+function checkExitStatus() {
+  if [ $1 -eq 0 ]; then
+    message "OK" ""
+  else
+    message "ERROR" "$2"
+  fi
+}
+
+# Remove worker function
+function removeWorker(){
+    message "INFO" "Removing worker."
+    docker rm -f "$WORKER_POOLNAME-worker"
+}
+
+# Remove worker option
+if [ "$1" == "--remove" ]; then
+    removeWorker
+    checkExitStatus $? "Unable to remove $WORKER_POOLNAME worker."
+    message "INFO" "To start a new worker please relaunch the script."
+    read -p "Press [Enter] to exit..."
+    exit 1
+fi
+
+# Update worker option
+if [ "$1" == "--update" ]; then
+    message "INFO" "Updating worker."
+    removeWorker
+    message "INFO" "Starting a new worker."
+fi
+
+
 echo "________________________________________________________________"
 echo "                                                                "
 echo "Before proceeding further please confirm below details are correct: "
@@ -85,47 +127,6 @@ done
 if [ "$answercontinue" == "no" ]; then
     #read -p " Press [Enter] to exit..."
     exit 1
-fi
-
-
-# Function that prints messages
-function message() {
-  echo "[$1] $2"
-  if [ "$1" == "ERROR" ]; then
-    read -p "Press [Enter] to exit..."
-    exit 1
-  fi
-}
-
-# Function which checks exit status and stops execution
-function checkExitStatus() {
-  if [ $1 -eq 0 ]; then
-    message "OK" ""
-  else
-    message "ERROR" "$2"
-  fi
-}
-
-# Remove worker function
-function removeWorker(){
-    message "INFO" "Removing worker."
-    docker rm -f "$WORKER_POOLNAME-worker"
-}
-
-# Remove worker option
-if [ "$1" == "--remove" ]; then
-    removeWorker
-    checkExitStatus $? "Unable to remove $WORKER_POOLNAME worker."
-    message "INFO" "To start a new worker please relaunch the script."
-    read -p "Press [Enter] to exit..."
-    exit 1
-fi
-
-# Update worker option
-if [ "$1" == "--update" ]; then
-    message "INFO" "Updating worker."
-    removeWorker
-    message "INFO" "Starting a new worker."
 fi
 
 # Determine OS platform
