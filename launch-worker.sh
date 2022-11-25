@@ -44,8 +44,11 @@ WORKERWALLETPASSWORD=${config["WALLET_PASSWORD"]}
 WORKER_NAME=${config["WORKER_NAME"]}
 
 
-sudo chown -Rf vagrant:root  /home/$(whoami)/.ethereum/keystore/
-sudo chown -Rf vagrant:root  /tmp/iexec
+# Function that updates owners of directory
+function updateOwner() {
+  sudo chown -Rf vagrant:root  /home/$(whoami)/.ethereum/keystore/
+  sudo chown -Rf vagrant:root  /tmp/iexec
+}
 
 
 # Function that prints messages
@@ -309,6 +312,7 @@ else
 
                 rm -fr /tmp/iexec
                 mkdir /tmp/iexec
+		updateOwner
                 cd /tmp/iexec
 
                 message "INFO" "Initializing SDK."
@@ -337,6 +341,7 @@ else
 			
             rm -fr /tmp/iexec
             mkdir /tmp/iexec
+	    updateOwner
             cd /tmp/iexec
 
             message "INFO" "Getting created wallet info."
@@ -367,6 +372,7 @@ else
 			WORKERWALLETPRIVATEKEY=$WALLET_PRIVATE_KEY
 			rm -fr /tmp/iexec
 			mkdir /tmp/iexec
+			updateOwner
 			cd /tmp/iexec
 			message "INFO" "Importing wallet for private key : $WORKERWALLETPRIVATEKEY"
 			message "INFO" "Getting wallet info."
