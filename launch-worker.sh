@@ -392,7 +392,8 @@ else
 			message "INFO" "A wallet with address $WALLET_ADDR was imported in $WALLET_FILE."
 			message "INFO" "To start the worker please relaunch the worker."
 
-                        bash launch-worker.sh
+
+			bash launch-worker.sh
 			#read -p "Press [Enter] to exit..."
 			exit 1          
         else
