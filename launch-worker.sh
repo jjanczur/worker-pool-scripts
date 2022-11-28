@@ -107,8 +107,6 @@ elif [ "$CREATE_NEW_WALLET" == "YES" ] || [ "$CREATE_NEW_WALL	ET" == "yes" ]; th
 fi
 
 
-#echo " You want to create new wallet = $CREATE_NEW_WALLET" 
-#echo " You want to import existing wallet for private key = $WALLET_PRIVATE_KEY "
 echo " Your wallet password is = $WORKERWALLETPASSWORD "
 echo " Your public worker name will be = $WORKER_NAME "
 
@@ -433,46 +431,6 @@ else
     NRLC=$(echo $WALLETINFO | sed -E "s/.*\"nRLC\":\"([0-9.]+)\".*/\1/g")
     STAKE=$(echo $ACCOUNTINFO | sed -E "s/.*\"stake\":\"([0-9.]+)\".*/\1/g")
 
-    # Showing balances
-    message "INFO" "Ethereum balance is $ETHEREUM ETH."
-    message "INFO" "Stake amount is $STAKE nRLC."
-
-    # Checking minimum ethereum
-   # if [ $(echo $ETHEREUM'<'$MINETHEREUM | bc -l) -ne 0 ]; then
-    #  message "ERROR" "You need to have $MINETHEREUM ETH to launch iExec worker. Your balance is $ETHEREUM ETH."
-    #fi
-
-    # Calculate amount to deposit
-   # TODEPOSIT=$(($DEPOSIT - $STAKE))
-
-    # Checking if wallet has enough nRLC to deposit
-   # if [ $NRLC -lt $TODEPOSIT ]; then
-    #  message "ERROR" "You need to have $TODEPOSIT nRLC to make a deposit. But you have only $NRLC nRLC."
-   # fi
-
-    # Checking deposit
-   # if [ $STAKE -lt $DEPOSIT ]; then
-
-      # Ask for deposit agreement
-    #  while [ "$answer" != "yes" ] && [ "$answer" != "no" ]; do
-     #   read -p "To participate you need to deposit $TODEPOSIT nRLC. Do you agree? [yes/no] " answer
-     # done
-
-     # if [ "$answer" == "no" ]; then
-     #   message "ERROR" "You can't participate without deposit."
-     # fi
-
-      # Deposit
-     # iexec account deposit $TODEPOSIT --wallet-file $(basename $WALLET_FILE) --password "$WORKERWALLETPASSWORD" --chain $CHAIN
-     # checkExitStatus $? "Failed to depoit."
-   # else
-    #  message "OK" "You don't need to stake. Your stake is $STAKE."
-   # fi
-
-    # Get worker name
-    #while [[ ! "$WORKER_NAME" =~ ^[-_A-Za-z0-9]+$ ]]; do
-      #read -p "Enter worker name [only letters, numbers, - and _ symbols]: " WORKER_NAME
-    #done
 
     # Get last version and run worker
     message "INFO" "Creating iExec $WORKER_POOLNAME worker..."
@@ -525,5 +483,7 @@ else
     fi
 
 fi
+
+timeout 10 sleep 10
 exit 1
 #read -p "Press [Enter] to exit..."
