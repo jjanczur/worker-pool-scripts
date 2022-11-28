@@ -46,7 +46,9 @@ WORKER_NAME=${config["WORKER_NAME"]}
 
 # Function that updates owners of directory
 function updateOwner() {
-  sudo chown -Rf vagrant:root  /home/$(whoami)/.ethereum/keystore/
+  echo "Updating owners current user: $(whoami)"	
+  sudo chown -Rf vagrant:root  /home/$(whoami)/.ethereum/
+  sudo chown -Rf vagrant:root  /home/vagrant/.ethereum/
   sudo chown -Rf vagrant:root  /tmp/iexec
   sudo chown -Rf vagrant:root  /tmp
 }
@@ -383,6 +385,8 @@ else
 			message "INFO" "Moving wallet to the kestore $KEYSTORE_DIR."
 			 $(mv UTC* $KEYSTORE_DIR )
 			 checkExitStatus $? "Can't move a wallet. Failed movement."
+
+			updateOwner 
 
 			# Get wallet address and wallet file path
 			WALLET_ADDR=$(echo $IEXEC_INIT_RESULT | sed -E "s/.*\"address\":\"([0-9a-zA-Z]+)\".*/\1/g")
