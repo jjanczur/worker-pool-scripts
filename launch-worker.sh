@@ -48,6 +48,7 @@ WORKER_NAME=${config["WORKER_NAME"]}
 function updateOwner() {
   sudo chown -Rf vagrant:root  /home/$(whoami)/.ethereum/keystore/
   sudo chown -Rf vagrant:root  /tmp/iexec
+  sudo chown -Rf vagrant:root  /tmp
 }
 
 
