@@ -166,7 +166,7 @@ fi
 # Launch iexec sdk function
 function iexec {
   if [ "$DISTRO" != "darwin" ]; then
-    docker run -e DEBUG=$DEBUG --interactive --tty --rm -v /tmp:/tmp -v $(pwd):/iexec-project -v /home/$(whoami)/.ethereum/keystore:/home/node/.ethereum/keystore -w /iexec-project iexechub/iexec-sdk:$IEXEC_SDK_VERSION "$@"
+    docker run -e DEBUG=$DEBUG  --rm -v /tmp:/tmp -v $(pwd):/iexec-project -v /home/$(whoami)/.ethereum/keystore:/home/node/.ethereum/keystore -w /iexec-project iexechub/iexec-sdk:$IEXEC_SDK_VERSION "$@"
   else
     docker run -e DEBUG=$DEBUG --interactive --tty --rm -v /tmp:/tmp -v $(pwd):/iexec-project -v /Users/$(whoami)/Library/Ethereum/keystore:/home/node/.ethereum/keystore -w /iexec-project iexechub/iexec-sdk:$IEXEC_SDK_VERSION "$@"
   fi
@@ -375,7 +375,7 @@ else
 			mkdir /tmp/iexec
 			updateOwner
 			cd /tmp/iexec
-			message "INFO" "Importing wallet for private key : $WORKERWALLETPRIVATEKEY"
+			message "INFO" "Importing wallet for private key : $WORKERWALLETPRIVATEKEY with Password: $WORKERWALLETPASSWORD"
 			message "INFO" "Getting wallet info."
                    # IEXEC_INIT_RESULT=$(iexec wallet create --keystoredir $PWD  --force --raw --password "$WORKERWALLETPASSWORD")
 		   IEXEC_INIT_RESULT=$(iexec wallet import "$WORKERWALLETPRIVATEKEY" --password "$WORKERWALLETPASSWORD" --keystoredir . )  #"$KEYSTORE_DIR")
@@ -402,7 +402,7 @@ else
 			message "INFO" "To start the worker please relaunch the worker."
 
 
-			bash launch-worker.sh
+			bash  /home/vagrant/worker-pool-scripts/launch-worker.sh
 			#read -p "Press [Enter] to exit..."
 			exit 1          
         else
@@ -482,7 +482,7 @@ else
       message "INFO" "Starting worker."
       docker start $WORKER_POOLNAME-worker
       message "INFO" "Worker was successfully started."
-	  message "INFO" "If you want to see logs of your worker please relaunch the worker."
+	  message "INFO" "If you want to see logs of your worker please relaunch the worker in VM."
     else
       message "INFO" "You can start the worker later with \"docker start $WORKER_POOLNAME-worker\"."
     fi
