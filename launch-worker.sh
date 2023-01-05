@@ -375,14 +375,14 @@ else
 			cd /tmp/iexec
 			message "INFO" "Importing wallet for private key : ***************** with Password: $WORKERWALLETPASSWORD"
 			message "INFO" "Getting wallet info."
-                   # IEXEC_INIT_RESULT=$(iexec wallet create --keystoredir $PWD  --force --raw --password "$WORKERWALLETPASSWORD")
-		   IEXEC_INIT_RESULT=$(iexec wallet import "$WORKERWALLETPRIVATEKEY" --password "$WORKERWALLETPASSWORD" --keystoredir . )  #"$KEYSTORE_DIR")
-		    checkExitStatus $? "Can't import a wallet. Failed init, Please provide a valid private key."
+      echo iexec wallet import "$WORKERWALLETPRIVATEKEY" --password "$WORKERWALLETPASSWORD" --keystoredir .
+		  IEXEC_INIT_RESULT=$(iexec wallet import "$WORKERWALLETPRIVATEKEY" --password "$WORKERWALLETPASSWORD" --keystoredir . )  #"$KEYSTORE_DIR")
+		  checkExitStatus $? "Can't import a wallet. Failed init, Please provide a valid private key."
 			
 
 			message "INFO" "Moving wallet to the kestore $KEYSTORE_DIR."
-			 $(mv UTC* $KEYSTORE_DIR )
-			 checkExitStatus $? "Can't move a wallet. Failed movement."
+			$(mv UTC* $KEYSTORE_DIR )
+			checkExitStatus $? "Can't move a wallet. Failed movement."
 
 			updateOwner 
 
