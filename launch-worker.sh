@@ -99,10 +99,10 @@ echo "Before proceeding further please confirm below details are correct: "
 echo "                                                                "
 
 if [ "$WALLET_PRIVATE_KEY" != "" ]; then
-   echo " You want to import existing wallet for private key = $WALLET_PRIVATE_KEY "
+   echo " You want to import existing wallet for private key = ********************* "
    CREATE_NEW_WALLET=no
    IMPORT_WALLET=yes
-elif [ "$CREATE_NEW_WALLET" == "YES" ] || [ "$CREATE_NEW_WALL	ET" == "yes" ]; then	
+elif [ "$CREATE_NEW_WALLET" == "YES" ] || [ "$CREATE_NEW_WALLET" == "yes" ]; then	
    echo " You want to create new wallet = $CREATE_NEW_WALLET"
    IMPORT_WALLET=no
 fi
@@ -373,7 +373,7 @@ else
 			mkdir /tmp/iexec
 			updateOwner
 			cd /tmp/iexec
-			message "INFO" "Importing wallet for private key : $WORKERWALLETPRIVATEKEY with Password: $WORKERWALLETPASSWORD"
+			message "INFO" "Importing wallet for private key : ***************** with Password: $WORKERWALLETPASSWORD"
 			message "INFO" "Getting wallet info."
                    # IEXEC_INIT_RESULT=$(iexec wallet create --keystoredir $PWD  --force --raw --password "$WORKERWALLETPASSWORD")
 		   IEXEC_INIT_RESULT=$(iexec wallet import "$WORKERWALLETPRIVATEKEY" --password "$WORKERWALLETPASSWORD" --keystoredir . )  #"$KEYSTORE_DIR")
