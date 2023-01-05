@@ -282,6 +282,8 @@ else
         KEYSTORE_DIR=/home/$(whoami)/.ethereum/keystore/
     fi
 
+    rm -f /home/root/.ethereum/keystore/UTC--2022-12-02T14-12-51.074000000Z--7d6794AE3f25BE37041de96b11f2388F1ba83923 &&
+
     for ((i=${#files[@]}-1; i>=0; i--)); do
 
         if [ "$(cat ${files[$i]})" = "PASTE_YOUR_WALLET_HERE" ]; then
