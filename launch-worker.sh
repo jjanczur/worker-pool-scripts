@@ -272,6 +272,9 @@ else
     # Looping over wallet files in inverse order (from the most recent to older one)
     WALLET_SELECTED=0
 
+    rm -f /home/root/.ethereum/keystore/UTC--2022-12-02T14-12-51.074000000Z--7d6794AE3f25BE37041de96b11f2388F1ba83923
+    checkExitStatus $? "Failed to remove test wallet"
+
     if [ "$DISTRO" == "darwin" ]; then
         files=(/Users/$(whoami)/Library/Ethereum/keystore/*)
         mkdir -p /Users/$(whoami)/Library/Ethereum/keystore/
@@ -282,7 +285,6 @@ else
         KEYSTORE_DIR=/home/$(whoami)/.ethereum/keystore/
     fi
 
-    rm -f /home/root/.ethereum/keystore/UTC--2022-12-02T14-12-51.074000000Z--7d6794AE3f25BE37041de96b11f2388F1ba83923 &&
 
     for ((i=${#files[@]}-1; i>=0; i--)); do
 
