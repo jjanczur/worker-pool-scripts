@@ -375,7 +375,7 @@ else
 			cd /tmp/iexec
 			message "INFO" "Importing wallet for private key : ***************** with Password: $WORKERWALLETPASSWORD"
 			message "INFO" "Getting wallet info."
-      echo iexec wallet import "$WORKERWALLETPRIVATEKEY" --password "$WORKERWALLETPASSWORD" --keystoredir .
+      message "INFO" "RUNNING - $ iexec wallet import "$WORKERWALLETPRIVATEKEY" --password "$WORKERWALLETPASSWORD" --keystoredir ."
 		  IEXEC_INIT_RESULT=$(iexec wallet import "$WORKERWALLETPRIVATEKEY" --password "$WORKERWALLETPASSWORD" --keystoredir . )  #"$KEYSTORE_DIR")
 		  checkExitStatus $? "Can't import a wallet. Failed init, Please provide a valid private key."
 			
