@@ -362,7 +362,7 @@ else
             message "INFO" "Please fill your wallet with minimum $MINETHEREUM ETH and $DEPOSIT nRLC. Then relaunch the script."
             bash launch-worker.sh
             #read -p "Press [Enter] to exit..."
-            exit 1            
+            exit 0            
             
         elif [ "$IMPORT_WALLET" == "yes" ]; then
 		
@@ -400,7 +400,7 @@ else
 
 			bash  /home/vagrant/worker-pool-scripts/launch-worker.sh
 			#read -p "Press [Enter] to exit..."
-			exit 1          
+			exit 0          
         else
 		    message "INFO" "Required values are not set in worker_config.properties file. Please set them all and relaunch the script."
             message "ERROR" "You cannot launch a worker without a wallet. Exiting..."			
@@ -486,5 +486,5 @@ else
 fi
 
 timeout 10 sleep 10
-exit 1
+exit 0
 #read -p "Press [Enter] to exit..."
